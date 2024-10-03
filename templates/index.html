@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Inventarios</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Sistema de Gestión de Inventarios</h1>
+
+        <!-- Inventario Actual -->
+        <h2>Inventario Actual</h2>
+        <div>{{ inventario|safe }}</div>
+
+        <!-- Órdenes de Compra -->
+        <h2 class="mt-4">Órdenes de Compra</h2>
+        <div>{{ ordenes|safe }}</div>
+
+        <!-- Productos con bajo stock -->
+        <h2 class="mt-4">Productos con Bajo Stock</h2>
+        <div>{{ bajos_stock|safe }}</div>
+
+        <!-- Órdenes Pendientes con detalles -->
+        <h2 class="mt-4">Órdenes Pendientes</h2>
+        <div>{{ pendientes|safe }}</div>
+    </div>
+</body>
+</html>
