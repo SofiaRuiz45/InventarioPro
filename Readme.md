@@ -1,0 +1,1 @@
+este es un proyecto de pandas del inventario
