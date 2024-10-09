@@ -1,0 +1,29 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #fff;
+    padding: 8px;
+}
+
+th {
+    background-color: #fff;
+    text-align: left;
+}
+
+tr:hover {
+    background-color: #dcdcdc;
+}
+
+.maincolor{
+    background-color: #7232f2;
+}
+
+.secondcolor{
+    color: #2c2c2c;
+}
+.thirdcolor{
+    background-color: #a578ff;
+}
