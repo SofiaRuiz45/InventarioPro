@@ -12,7 +12,6 @@ CREATE TABLE IF NOT EXISTS Producto (
     cantidadDisponible INTEGER NOT NULL,
     categoriaProducto TEXT NOT NULL
 )''')
-
 # Crear tabla Proveedor
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS Proveedor (

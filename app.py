@@ -1,5 +1,7 @@
 from flask import Flask, render_template
 import pandas as pd
+import sqlite3
+from clases.producto import registrarProducto, products
 
 app = Flask(__name__)
 
@@ -49,6 +51,11 @@ def index():
                            ordenes=ordenes_html, 
                            bajos_stock=bajos_stock_html, 
                            pendientes=pendientes_html)
+
+
+app.add_url_rule('/productos', view_func=products, methods=['GET'])
+app.add_url_rule('/registrarProducto', view_func=registrarProducto, methods=['GET', 'POST'])
+
 
 if __name__ == '__main__':
     app.run(debug=True)
