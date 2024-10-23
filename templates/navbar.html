@@ -24,7 +24,7 @@
                 <div @click.away="open = false" class="relative" x-data="{ open: false }">
                     <button @click="open = !open"
                         class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:shadow-outline">
-                        <span>Productos</span>
+                        <a href="/productos"><span>Productos</span></a>
                         <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}"
                             class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform">
                             <path fill-rule="evenodd"

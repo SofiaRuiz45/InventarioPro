@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 import pandas as pd
-import sqlite3
+import mysql.connector
 from clases.producto import registrarProducto, products
 
 app = Flask(__name__)
