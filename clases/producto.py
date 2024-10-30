@@ -8,8 +8,8 @@ app = Flask(__name__)
 def get_db_connection():
     return mysql.connector.connect(
         host='localhost',       # Cambia esto si MySQL está en otro servidor o contenedor
-        user='tu_usuario',      # Reemplaza con tu usuario MySQL
-        password='tu_contraseña',# Reemplaza con tu contraseña MySQL
+        user='root',      # Reemplaza con tu usuario MySQL
+        password='',# Reemplaza con tu contraseña MySQL
         database='inventario'    # Nombre de tu base de datos
     )
 
@@ -18,9 +18,9 @@ def get_db_connection():
 def registrarProducto():
     if request.method == 'POST':
         # Obtenemos los datos del formulario
-        nombre_producto = request.form['nombreProducto']
-        cantidad_disponible = request.form['cantidadDisponible']
-        categoria_producto = request.form['categoriaProducto']
+        nombre_producto = request.form.get('nombreProducto')
+        cantidad_disponible = request.form.get('cantidadDisponible')
+        categoria_producto = request.form.get('categoriaProducto')
 
         # Conexión y ejecución de la inserción en MySQL
         conn = get_db_connection()
@@ -32,6 +32,7 @@ def registrarProducto():
         ''', (nombre_producto, cantidad_disponible, categoria_producto))
 
         conn.commit()
+        conn.close()
         conn.close()
 
         return redirect(url_for('products')) 
