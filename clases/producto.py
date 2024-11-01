@@ -1,17 +1,22 @@
 from flask import Flask, request, render_template, redirect, url_for
-import mysql.connector
+import pyodbc
 import pandas as pd
+from dotenv import load_dotenv
+import os
 
 app = Flask(__name__)
+load_dotenv()
 
-# Conexión a la base de datos MySQL
+# Conexión a la BD SQL Server
 def get_db_connection():
-    return mysql.connector.connect(
-        host='localhost',       # Cambia esto si MySQL está en otro servidor o contenedor
-        user='root',      # Reemplaza con tu usuario MySQL
-        password='',# Reemplaza con tu contraseña MySQL
-        database='inventario'    # Nombre de tu base de datos
+    return pyodbc.connect(
+        'DRIVER={ODBC Driver 17 for SQL Server};'
+        f'SERVER={os.getenv("DB_SERVER")};'
+        f'DATABASE={os.getenv("DB_NAME")};'
+        f'UID={os.getenv("DB_USER")};'
+        f'PWD={os.getenv("DB_PASSWORD")}'
     )
+
 
 # Ruta para registrar un producto
 @app.route('/registrarProducto', methods=['GET', 'POST'])
@@ -22,17 +27,16 @@ def registrarProducto():
         cantidad_disponible = request.form.get('cantidadDisponible')
         categoria_producto = request.form.get('categoriaProducto')
 
-        # Conexión y ejecución de la inserción en MySQL
+        # Conexión y ejecución de la inserción en SQL Server
         conn = get_db_connection()
         cursor = conn.cursor()
 
         cursor.execute('''
             INSERT INTO Producto (nombreProducto, cantidadDisponible, categoriaProducto)
-            VALUES (%s, %s, %s)
+            VALUES (?, ?, ?)
         ''', (nombre_producto, cantidad_disponible, categoria_producto))
 
         conn.commit()
-        conn.close()
         conn.close()
 
         return redirect(url_for('products')) 
@@ -42,16 +46,14 @@ def registrarProducto():
 # Ruta para mostrar productos
 @app.route('/productos', methods=['GET'])
 def products():
-    # Conexión a MySQL
     conn = get_db_connection()
 
-    # Consulta de los productos
+    # Consulta
     query = 'SELECT idProducto, nombreProducto, cantidadDisponible, categoriaProducto FROM Producto'
-    productos_df = pd.read_sql(query, conn)  # Utilizamos pandas para obtener los datos como DataFrame
+    productos_df = pd.read_sql(query, conn)  
 
     conn.close()
 
-    # Convertimos el DataFrame a lista de diccionarios para pasar a la plantilla
     productos = productos_df.to_dict(orient='records')
 
     return render_template('./productos/productos.html', productos=productos)

@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 import pandas as pd
 import mysql.connector
+import pyodbc
 from clases.producto import registrarProducto, products
 from clases.proveedor import registrarProveedor, prov
 

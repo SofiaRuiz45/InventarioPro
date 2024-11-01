@@ -25,17 +25,17 @@
                 <tbody class="text-gray-700">
                     {% for producto in productos %}
                     <tr class="border-b border-gray-200">
-                        <td class="py-4 px-6">{{ producto[0] }}</td>  <!-- ID -->
-                        <td class="py-4 px-6">{{ producto[1] }}</td>  <!-- Nombre del Producto -->
-                        <td class="py-4 px-6">{{ producto[2] }}</td>  <!-- Cantidad Disponible -->
-                        <td class="py-4 px-6">{{ producto[3] }}</td>  <!-- Categoría -->
-                        <td class="py-4 px-6"> <!-- Acciones -->
+                        <td class="py-4 px-6">{{ producto['idProducto'] }}</td> 
+                        <td class="py-4 px-6">{{ producto['nombreProducto'] }}</td> 
+                        <td class="py-4 px-6">{{ producto['cantidadDisponible'] }}</td>  
+                        <td class="py-4 px-6">{{ producto['categoriaProducto'] }}</td>  
+                        <td class="py-4 px-6"> 
                             <a href="" class="text-blue-500 hover:text-blue-700">Editar</a>
                             <a href="" class="text-red-500 hover:text-red-700 ml-4">Eliminar</a>
                         </td>
                     </tr>
                     {% endfor %}
-                </tbody>
+                </tbody>                
             </table>
         </div>
     </div>
