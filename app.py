@@ -1,9 +1,9 @@
 from flask import Flask, render_template
 import pandas as pd
-import mysql.connector
+# import mysql.connector
 import pyodbc
 from clases.producto import registrarProducto, products
-from clases.proveedor import registrarProveedor, prov
+# from clases.proveedor import registrarProveedor, prov
 
 app = Flask(__name__)
 
@@ -54,8 +54,8 @@ def index():
                            bajos_stock=bajos_stock_html, 
                            pendientes=pendientes_html)
 
-app.add_url_rule('/provedores', view_func=prov, methods=['GET'])
-app.add_url_rule('/registrarProveedor', view_func=registrarProveedor, methods=['GET', 'POST'])
+# app.add_url_rule('/provedores', view_func=prov, methods=['GET'])
+# app.add_url_rule('/registrarProveedor', view_func=registrarProveedor, methods=['GET', 'POST'])
 
 app.add_url_rule('/productos', view_func=products, methods=['GET'])
 app.add_url_rule('/registrarProducto', view_func=registrarProducto, methods=['GET', 'POST'])
