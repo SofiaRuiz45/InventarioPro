@@ -58,5 +58,49 @@ def products():
 
     return render_template('./productos/productos.html', productos=productos)
 
+
+@app.route('/editarProducto/<int:id>', methods=['GET', 'POST'])
+def editarProducto(id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    if request.method == 'POST':
+        # Obtiene los datos del formulario
+        nombre_producto = request.form.get('nombreProducto')
+        cantidad_disponible = request.form.get('cantidadDisponible')
+        categoria_producto = request.form.get('categoriaProducto')
+
+        # Actualiza el producto en la base de datos
+        cursor.execute('''
+            UPDATE Producto 
+            SET nombreProducto = ?, cantidadDisponible = ?, categoriaProducto = ?
+            WHERE idProducto = ?
+        ''', (nombre_producto, cantidad_disponible, categoria_producto, id))
+
+        conn.commit()
+        conn.close()
+        return redirect(url_for('products'))
+
+    # Obtiene los datos actuales del producto para la edición
+    cursor.execute('SELECT idProducto, nombreProducto, cantidadDisponible, categoriaProducto FROM Producto WHERE idProducto = ?', (id,))
+    producto = cursor.fetchone()
+    conn.close()
+
+    # Convierte el resultado en un diccionario si el producto existe
+    if producto:
+        producto = dict(zip([column[0] for column in cursor.description], producto))
+
+    return render_template('./productos/editarProducto.html', producto=producto)
+
+# Ruta para eliminar un producto
+@app.route('/eliminarProducto/<int:id>', methods=['POST'])
+def eliminarProducto(id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM Producto WHERE idProducto = ?', (id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('products'))
+
 if __name__ == '__main__':
     app.run(debug=True)
