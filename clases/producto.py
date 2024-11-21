@@ -2,20 +2,12 @@ from flask import Flask, request, render_template, redirect, url_for
 import pyodbc
 import pandas as pd
 from dotenv import load_dotenv
+from databases.db_config import get_connection
+
 import os
 
 app = Flask(__name__)
 load_dotenv()
-
-# Conexión a la BD SQL Server
-def get_db_connection():
-    return pyodbc.connect(
-        'DRIVER={ODBC Driver 17 for SQL Server};'
-        f'SERVER={os.getenv("DB_SERVER")};'
-        f'DATABASE={os.getenv("DB_NAME")};'
-        f'UID={os.getenv("DB_USER")};'
-        f'PWD={os.getenv("DB_PASSWORD")}'
-    )
 
 
 # Ruta para registrar un producto
@@ -28,7 +20,7 @@ def registrarProducto():
         categoria_producto = request.form.get('categoriaProducto')
 
         # Conexión y ejecución de la inserción en SQL Server
-        conn = get_db_connection()
+        conn = get_connection()
         cursor = conn.cursor()
 
         cursor.execute('''
@@ -46,7 +38,7 @@ def registrarProducto():
 # Ruta para mostrar productos
 @app.route('/productos', methods=['GET'])
 def products():
-    conn = get_db_connection()
+    conn = get_connection()
 
     # Consulta
     query = 'SELECT idProducto, nombreProducto, cantidadDisponible, categoriaProducto FROM Producto'
@@ -61,7 +53,7 @@ def products():
 
 @app.route('/editarProducto/<int:id>', methods=['GET', 'POST'])
 def editarProducto(id):
-    conn = get_db_connection()
+    conn = get_connection()
     cursor = conn.cursor()
 
     if request.method == 'POST':
@@ -95,7 +87,7 @@ def editarProducto(id):
 # Ruta para eliminar un producto
 @app.route('/eliminarProducto/<int:id>', methods=['POST'])
 def eliminarProducto(id):
-    conn = get_db_connection()
+    conn = get_connection()
     cursor = conn.cursor()
     cursor.execute('DELETE FROM Producto WHERE idProducto = ?', (id,))
     conn.commit()

@@ -1,6 +1,7 @@
 from flask import Flask, render_template
+from databases.db_init import create_database, create_tables
 import pandas as pd
-# import mysql.connector
+from databases.db_config import get_connection
 import pyodbc
 from clases.producto import registrarProducto, products, editarProducto, eliminarProducto
 from clases.ordenCompra import registrarOrdenCompra, orders, editarOrdenCompra, eliminarOrdenCompra
@@ -65,4 +66,6 @@ app.add_url_rule('/eliminarOrdenCompra/<int:id>', view_func=eliminarOrdenCompra,
 
 
 if __name__ == '__main__':
+    create_database()  # Crear la base de datos si no existe
+    create_tables()    # Crear las tablas en la base de datos
     app.run(debug=True)
