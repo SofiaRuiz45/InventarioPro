@@ -6,6 +6,7 @@
     <title>Proveedores Registrados</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-100">
     <div class="container mx-auto mt-10">
         <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Proveedores Registrados</h2>
@@ -22,20 +23,26 @@
                     </tr>
                 </thead>
                 <tbody class="text-gray-700">
-                    {% for proveedor in provedores %}
+                    {% for proveedor in proveedores %}
                     <tr class="border-b border-gray-200">
-                        <td class="py-4 px-6">{{ proveedor[0] }}</td>  <!-- ID -->
-                        <td class="py-4 px-6">{{ proveedor[1] }}</td>  <!-- Nombre del Proveedor -->
-                        <td class="py-4 px-6">{{ proveedor[2] }}</td>  <!-- Teléfono -->
-                        <td class="py-4 px-6">{{ proveedor[3] }}</td>  <!-- Dirección -->
-                        <td class="py-4 px-6"> <!-- Acciones -->
-                            <a href="" class="text-blue-500 hover:text-blue-700">Editar</a>
-                            <a href="" class="text-red-500 hover:text-red-700 ml-4">Eliminar</a>
+                        <td class="py-4 px-6">{{ proveedor['idProveedor'] }}</td> 
+                        <td class="py-4 px-6">{{ proveedor['nombreProveedor'] }}</td>  
+                        <td class="py-4 px-6">{{ proveedor['telefonoProveedor'] }}</td>  
+                        <td class="py-4 px-6">{{ proveedor['direccionProveedor'] }}</td>  
+                        <td class="py-4 px-6"> 
+                            <!-- Acciones -->
+                            <a href="/proveedores/editarProveedor/{{proveedor['idProveedor']}}" class="text-blue-500 hover:text-blue-700">Editar</a>
+                            <form action="{{ url_for('proveedores.eliminarProveedor', id=proveedor.idProveedor) }}" method="POST" style="display: inline;">
+                                <button type="submit" class="text-red-500 hover:text-red-700">Eliminar</button>
+                            </form>
                         </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
+        <div class="text-right mt-4">
+            <a href="/proveedores/registrarProveedor" class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Registrar Proveedor</a>
         </div>
     </div>
 </body>
