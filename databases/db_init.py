@@ -1,18 +1,16 @@
 from databases.db_config import get_connection
 import os
 
-# Obtener la variable DB_NAME desde la configuración
+# obtiene la variable DB_NAME desde la configuración
 DB_NAME = os.getenv("DB_NAME")
 
-# Crear la base de datos si no existe
-
-
+# crea la base de datos si no existe
 def create_database():
     conn = get_connection()
     if conn:
         cursor = conn.cursor()
         try:
-            # Verificar si la base de datos ya existe
+            # verifica si la base de datos ya existe
             cursor.execute(
                 f"SELECT database_id FROM sys.databases WHERE name = '{DB_NAME}';")
             result = cursor.fetchone()
@@ -32,8 +30,6 @@ def create_database():
         print("No se pudo establecer la conexión para crear la base de datos.")
 
 # Crear las tablas en la base de datos
-
-
 def create_tables():
     conn = get_connection()
     if conn:
@@ -42,7 +38,7 @@ def create_tables():
             # Asegurarse de usar la base de datos correcta
             cursor.execute(f"USE {DB_NAME};")
 
-            # Crear una tabla de ejemplo
+            # Crear tablas
             cursor.execute("""IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Producto' AND xtype='U')
         CREATE TABLE Producto (
             idProducto INT PRIMARY KEY IDENTITY(1,1),
@@ -51,14 +47,6 @@ def create_tables():
             categoriaProducto VARCHAR(100)
         );
         
-        IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='OrdenCompra' AND xtype='U')
-        CREATE TABLE OrdenCompra (
-            idOrdenCompra INT PRIMARY KEY IDENTITY(1,1),
-            fechaOrden DATE,
-            cantidadTotal INT,
-            precioTotal DECIMAL(18,2),
-            estado VARCHAR(100)
-        );
         
         IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Proveedor' AND xtype='U')
         CREATE TABLE Proveedor (
@@ -78,8 +66,18 @@ def create_tables():
             idProveedor INT,
             idOrdenCompra INT,
             FOREIGN KEY (idProducto) REFERENCES Producto(idProducto),
-            FOREIGN KEY (idProveedor) REFERENCES Proveedor(idProveedor),
-            FOREIGN KEY (idOrdenCompra) REFERENCES OrdenCompra(idOrdenCompra)
+            FOREIGN KEY (idProveedor) REFERENCES Proveedor(idProveedor)
+        );
+
+        IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='ProductoSaliente' AND xtype='U')
+        CREATE TABLE ProductoSaliente (
+            idProdSaliente INT PRIMARY KEY IDENTITY(1,1),
+            cantidad INT,
+            precio DECIMAL(18,2),
+            fechaSalida DATE,
+            idProducto INT,
+            idOrdenCompra INT,
+            FOREIGN KEY (idProducto) REFERENCES Producto(idProducto)
         );
     """)
             conn.commit()
