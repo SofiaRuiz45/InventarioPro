@@ -1,0 +1,47 @@
+<script src="https://cdn.tailwindcss.com"></script>
+
+<form class="space-y-4 md:space-y-6" method="POST" action="/productoSaliente/registrarProductoSaliente">
+  <div>
+    <label for="estado" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Producto</label>
+    <select name="idProducto" id="idProducto"
+      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      required="">
+      <option value="" disabled selected>Selecciona una opcion</option>
+      {% for producto in productos %}
+            <option value="{{ producto[0] }}">{{ producto[1] }}</option>
+        {% endfor %}
+
+    </select>
+  </div>
+  <div>
+    <label for="fechaSalida" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha Salida</label>
+    <input type="date" name="fechaSalida" id="fechaSalida"
+      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      required="">
+  </div>
+
+  <div>
+    <label for="cantidad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cantidad Total</label>
+    <input type="number" name="cantidadTotal" id="cantidadTotal"
+      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      required="">
+  </div>
+  <!-- <div>
+    <label for="precio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Precio Total</label>
+    <input type="hidden" name="precioTotal" id="precioTotal"
+      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      required="">
+  </div> -->
+  <div>
+    <label for="descripcion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripción</label>
+    <input type="text" name="descripcion" id="descripcion"
+      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+  >
+  </div>
+
+  <button type="submit"
+    class="w-full text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+    Registrar nueva orden
+  </button>
+
+</form>
