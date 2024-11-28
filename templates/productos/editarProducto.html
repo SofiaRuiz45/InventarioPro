@@ -1,47 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Producto</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body>
-    {% include 'navbar.html' %}
-    <section class="flex flex-col items-center pt-6">
-        <div class="w-full bg-white rounded-lg shadow dark:border sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-            <div class="p-6 space-y-4 sm:p-8">
-                <h1 class="text-xl font-bold leading-tight text-gray-900 md:text-2xl dark:text-white">Editar Producto</h1>
-                <form class="space-y-4" method="POST" action="{{ url_for('productos.editarProducto', id=producto['idProducto']) }}">
+<script src="https://cdn.tailwindcss.com"></script>
+<form class="space-y-4" method="POST" action="{{ url_for('productos.editarProducto', id=producto['idProducto']) }}">
 
-                    <div>
-                        <label for="product-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre del Producto</label>
-                        <input type="text" name="nombreProducto" id="product-name" value="{{ producto.nombreProducto }}" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 block w-full p-2.5 dark:bg-gray-700" required>
-                    </div>
+    <div>
+        <label for="product-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre del
+            Producto</label> 
+        <input type="text" name="nombreProducto" id="product-name" value="{{ producto.nombreProducto }}"
+            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 block w-full p-2.5 dark:bg-gray-700"
+            required>
+    </div>
 
-                    <div>
-                        
-                        <input type="hidden" name="cantidadDisponible" id="quantity" value="{{ producto.cantidadDisponible }}" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 block w-full p-2.5 dark:bg-gray-700" required>
-                    </div>
+    <div>
 
-                    <div>
-                        <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoría</label>
-                        <select name="categoriaProducto" id="category" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 block w-full p-2.5 dark:bg-gray-700" required>
-                            <option value="lacteo" {% if producto.categoriaProducto == 'lacteo' %}selected{% endif %}>Lácteo</option>
-                            <option value="fideos" {% if producto.categoriaProducto == 'fideos' %}selected{% endif %}>Fideos</option>
-                            <option value="galletas" {% if producto.categoriaProducto == 'galletas' %}selected{% endif %}>Galletas</option>
-                            <option value="bebidas" {% if producto.categoriaProducto == 'bebidas' %}selected{% endif %}>Bebidas</option>
-                            <option value="otros" {% if producto.categoriaProducto == 'otros' %}selected{% endif %}>Otros</option>
-                        </select>
-                    </div>
+        <input type="hidden" name="cantidadDisponible" id="quantity" value="{{ producto.cantidadDisponible }}"
+            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 block w-full p-2.5 dark:bg-gray-700"
+            required>
+    </div>
+    <div>
+        <label for="product-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Precio Unitario</label> 
+        <input type="text" name="precioUnitario" id="precioUnitario" value="{{ producto.precioUnitario }}"
+            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 block w-full p-2.5 dark:bg-gray-700"
+            required>
+    </div>
+    <div>
+        
+        <input type="hidden" name="precioVenta" id="precioVenta" value="{{ producto.precioVenta }}"
+            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 block w-full p-2.5 dark:bg-gray-700"
+            required>
+    </div>
+    <div>
+        <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoría</label>
+        <select name="categoriaProducto" id="category"
+            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 block w-full p-2.5 dark:bg-gray-700"
+            required>
+            <option value="Lacteo" {% if producto.categoriaProducto=='Lacteo' %}selected{% endif %}>Lácteo</option>
+            <option value="Fideos" {% if producto.categoriaProducto=='Fideos' %}selected{% endif %}>Fideos</option>
+            <option value="Galletas" {% if producto.categoriaProducto=='Galletas' %}selected{% endif %}>Galletas
+            </option>
+            <option value="Bebidas" {% if producto.categoriaProducto=='Bebidas' %}selected{% endif %}>Bebidas</option>
+            <option value="Otros" {% if producto.categoriaProducto=='Otros' %}selected{% endif %}>Otros</option>
+        </select>
+    </div>
 
-                    <button type="submit" class="w-full text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                        Guardar Cambios
-                    </button>
+    <button type="submit"
+        class="w-full text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+        Guardar Cambios
+    </button>
 
-                </form>
-            </div>
-        </div>
-    </section>
-</body>
-</html>
+</form>

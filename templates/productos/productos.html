@@ -7,18 +7,33 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 {% include './navbar.html' %}
-<body class="bg-gray-100">
-    <div class="container mx-auto mt-10">
-        <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Productos Registrados</h2>
-        
-
+<body >
+    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8 mt-18 lg:p-12">
+        <div class="max-w-7xl mx-auto">
+            <header class="bg-white shadow-md rounded-lg mb-6 flex items-center justify-between px-4 py-3">
+                <h1 class="text-2xl font-bold text-indigo-800">Productos</h1>
+                <div class="flex items-center space-x-4">
+                    <a href="/productos/registrarProducto" 
+                        class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition duration-300 ease-in-out open-modal">
+                        Registrar
+                    </a>
+                    <a href="/productos/registrarProducto" 
+                        class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition duration-300 ease-in-out open-modal">
+                        Ingresar
+                    </a>
+                </div>
+            </header>
+            
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
         <div class="overflow-x-auto">
-            <table class="min-w-full bg-white border border-gray-200 shadow-lg rounded-lg">
+            <table class="w-full">
                 <thead>
                     <tr class="bg-gray-800 text-white text-left">
                         <th class="py-3 px-6 font-semibold">ID</th>
                         <th class="py-3 px-6 font-semibold">Nombre del Producto</th>
                         <th class="py-3 px-6 font-semibold">Cantidad Disponible</th>
+                        <th class="py-3 px-6 font-semibold">Precio Unitario</th>
+                        <th class="py-3 px-6 font-semibold">Precio de Venta</th>
                         <th class="py-3 px-6 font-semibold">Categoría</th>
                         <th class="py-3 px-6 font-semibold">Acciones</th>
                     </tr>
@@ -29,10 +44,12 @@
                         <td class="py-4 px-6">{{ producto['idProducto'] }}</td> 
                         <td class="py-4 px-6">{{ producto['nombreProducto'] }}</td> 
                         <td class="py-4 px-6">{{ producto['cantidadDisponible'] }}</td>  
+                        <td class="py-4 px-6">{{ producto['precioUnitario'] }}</td>  
+                        <td class="py-4 px-6">{{ producto['precioVenta'] }}</td>  
                         <td class="py-4 px-6">{{ producto['categoriaProducto'] }}</td>  
                         <td class="py-4 px-6"> 
-                            <a href="/editarProducto/{{ producto['idProducto'] }}" class="text-blue-500 hover:text-blue-700">Editar</a>
-                            <form action="{{ url_for('eliminarProducto', id=producto.idProducto) }}" method="POST" style="display: inline;">
+                            <a href="{{ url_for('productos.editarProducto', id=producto['idProducto']) }}" class="text-blue-500 hover:text-blue-700 open-modal">Editar</a>
+                            <form action="{{ url_for('productos.eliminarProducto', id=producto.idProducto) }}" method="POST" style="display: inline;">
                                 <button type="submit" class="text-red-500 hover:text-red-700">Eliminar</button>
                             </form>
                         </td>
@@ -41,10 +58,56 @@
                 </tbody>                
             </table>
         </div>
-        <div class="text-right mt-4">
-            <a href="/registrarProducto" class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Registrar Producto</a>
+    </div>
+    </div>
+        </div>
+        <div id="modal" class="fixed inset-0 hidden bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg w-3/4 max-w-lg shadow-lg">
+                <button id="closeModal" class="text-gray-500 hover:text-gray-900 absolute top-4 right-4">✖</button>
+                <div id="modal-content" class="p-6">
+                    <!-- contenido del modal -->
+                </div>
+            </div>
         </div>
         
-    </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const openModalButtons = document.querySelectorAll(".open-modal");
+                const closeModal = document.getElementById("closeModal");
+                const modal = document.getElementById("modal");
+                const modalContent = document.getElementById("modal-content");
+        
+                openModalButtons.forEach(button => {
+                    button.addEventListener("click", async (e) => {
+                        e.preventDefault();
+                        try {
+                            const response = await fetch(button.href);
+                            if (!response.ok) throw new Error("Error al cargar el formulario");
+                            const content = await response.text();
+                            modalContent.innerHTML = content;
+                            modal.classList.remove("hidden");
+                        } catch (error) {
+                            console.error(error);
+                            alert("No se pudo cargar el formulario.");
+                        }
+                    });
+                });
+        
+                closeModal.addEventListener("click", () => {
+                    modal.classList.add("hidden");
+                    modalContent.innerHTML = "";
+                });
+        
+                modal.addEventListener("click", (e) => {
+                    if (e.target === modal) {
+                        modal.classList.add("hidden");
+                        modalContent.innerHTML = "";
+                    }
+                });
+            });
+        </script>
+        
+        
+      
 </body>
 </html>
