@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ingresos de Productos</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-100">
     <div class="container mx-auto mt-10">
         <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Ingresos de Productos</h2>
@@ -14,6 +16,7 @@
             <table class="min-w-full bg-white border border-gray-200 shadow-lg rounded-lg">
                 <thead>
                     <tr class="bg-gray-800 text-white text-left">
+                        <th class="py-3 px-6 font-semibold">ID ingreso</th>
                         <th class="py-3 px-6 font-semibold">ID Producto</th>
                         <th class="py-3 px-6 font-semibold">Nombre del Producto</th>
                         <th class="py-3 px-6 font-semibold">Cantidad Ingresada</th>
@@ -25,20 +28,35 @@
                 <tbody class="text-gray-700">
                     {% for ingreso in ingresos %}
                     <tr class="border-b border-gray-200">
-                        <td class="py-4 px-6">{{ ingreso['idProducto'] }}</td> 
-                        <td class="py-4 px-6">{{ ingreso['nombreProducto'] }}</td>  
-                        <td class="py-4 px-6">{{ ingreso['cantidad'] }}</td>  
-                        <td class="py-4 px-6">{{ ingreso['precio'] }}</td>  
-                        <td class="py-4 px-6">{{ ingreso['fechaIngreso'] }}</td>  
-                        <td class="py-4 px-6">{{ ingreso['nombreProveedor'] }}</td>  
+                        <td class="py-4 px-6">{{ ingreso['idProdIngresado'] }}</td>
+                        <td class="py-4 px-6">{{ ingreso['idProducto'] }}</td>
+                        <td class="py-4 px-6">{{ ingreso['nombreProducto'] }}</td>
+                        <td class="py-4 px-6">{{ ingreso['cantidad'] }}</td>
+                        <td class="py-4 px-6">{{ ingreso['precioUnitarioIng'] }}</td>
+                        <td class="py-4 px-6">{{ ingreso['fechaIngreso'] }}</td>
+                        <td class="py-4 px-6">{{ ingreso['nombreProveedor'] }}</td>
+                        <td class="py-4 px-6">
+                            <!-- Acciones -->
+                            <a href="/productoIngresado/editarIngreso/{{ingreso['idProdIngresado']}}"
+                                class="text-blue-500 hover:text-blue-700">Editar</a>
+                            <form
+                                action="{{ url_for('productoIngresado.eliminarIngreso', id=ingreso['idProdIngresado']) }}"
+                                method="POST" style="display: inline;">
+                                <button type="submit" class="text-red-500 hover:text-red-700">Eliminar</button>
+                            </form>
+
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
         <div class="text-right mt-4">
-            <a href="/productoIngresado/ingresarProducto" class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ingresar Producto</a>
+            <a href="/productoIngresado/ingresarProducto"
+                class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ingresar
+                Producto</a>
         </div>
     </div>
 </body>
+
 </html>
