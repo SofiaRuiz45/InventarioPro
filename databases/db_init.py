@@ -44,6 +44,8 @@ def create_tables():
             idProducto INT PRIMARY KEY IDENTITY(1,1),
             nombreProducto VARCHAR(100),
             cantidadDisponible INT,
+            precioUnitario DECIMAL(18,2),
+            precioVenta DECIMAL(18,2),
             categoriaProducto VARCHAR(100)
         );
         
@@ -60,11 +62,10 @@ def create_tables():
         CREATE TABLE ProductoIngresado (
             idProdIngresado INT PRIMARY KEY IDENTITY(1,1),
             cantidad INT,
-            precio DECIMAL(18,2),
+            precioUnitarioIng DECIMAL(18,2),
             fechaIngreso DATE,
             idProducto INT,
             idProveedor INT,
-            idOrdenCompra INT,
             FOREIGN KEY (idProducto) REFERENCES Producto(idProducto),
             FOREIGN KEY (idProveedor) REFERENCES Proveedor(idProveedor)
         );
@@ -73,10 +74,10 @@ def create_tables():
         CREATE TABLE ProductoSaliente (
             idProdSaliente INT PRIMARY KEY IDENTITY(1,1),
             cantidad INT,
-            precio DECIMAL(18,2),
+            ganancia DECIMAL(18,2),
             fechaSalida DATE,
+            descripcion VARCHAR(100),
             idProducto INT,
-            idOrdenCompra INT,
             FOREIGN KEY (idProducto) REFERENCES Producto(idProducto)
         );
     """)
