@@ -183,3 +183,23 @@ def eliminarProductoSaliente(id):
 
     return redirect(url_for('productoSaliente.productosSalientes'))
 
+# 
+@producto_saliente_bp.route('/eliminarProductosSalientes', methods=['POST'])
+def eliminarProductosSalientes():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    try:
+        # Eliminar todos los registros de ProductoSaliente primero
+        cursor.execute('DELETE FROM ProductoSaliente')
+        
+        
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        print(f"Error al eliminar los productos: {e}")
+        return "Error al eliminar los productos", 500
+    finally:
+        conn.close()
+
+    return redirect(url_for('productoSaliente.productosSalientes'))

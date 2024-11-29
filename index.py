@@ -10,7 +10,7 @@ def index():
     conn = get_connection()
 
     # Consulta
-    query = 'SELECT idProducto, nombreProducto, cantidadDisponible, categoriaProducto FROM Producto'
+    query = 'SELECT idProducto, nombreProducto, cantidadDisponible, precioUnitario, precioVenta,  categoriaProducto FROM Producto'
     productos_df = pd.read_sql(query, conn)
     conn.close()
 

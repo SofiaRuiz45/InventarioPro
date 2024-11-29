@@ -185,3 +185,25 @@ def importarProductos():
     conn.close()
 
     return redirect(url_for('productos.products'))
+# Eliminar todos los productos
+@productos_bp.route('/eliminarTodosProductos', methods=['POST'])
+def eliminarTodosProductos():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    try:
+        # Eliminar todos los registros de ProductoSaliente primero
+        cursor.execute('DELETE FROM ProductoSaliente')
+        
+        # Eliminar todos los registros de Producto despuésf
+        cursor.execute('DELETE FROM Producto')
+        
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        print(f"Error al eliminar los productos: {e}")
+        return "Error al eliminar los productos", 500
+    finally:
+        conn.close()
+
+    return redirect(url_for('productos.products'))

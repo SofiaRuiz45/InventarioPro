@@ -6,7 +6,7 @@
     <title>Productos Registrados</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-{% include './navbar.html' %}
+{% include './navbar.html' %} {% if productos %}
 <body >
     <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8 mt-18 lg:p-12">
         <div class="max-w-7xl mx-auto">
@@ -21,6 +21,13 @@
                         class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition duration-300 ease-in-out open-modal">
                         Ingresar
                     </a>
+                    <form action="{{ url_for('productos.eliminarTodosProductos') }}" method="POST"
+                        onsubmit="return confirm('¿Estás seguro de que deseas eliminar todos los productos salientes?')">
+                        <button
+                            class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition duration-300 ease-in-out">
+                            Eliminar Todos
+                        </button>
+                    </form>
                 </div>
             </header>
             
@@ -58,6 +65,9 @@
                 </tbody>                
             </table>
         </div>
+        {% else %}
+        <p class="text-center text-gray-500">No hay productos registrados.</p>
+        {% endif %} 
     </div>
     </div>
         </div>
