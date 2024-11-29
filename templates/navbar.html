@@ -73,10 +73,12 @@
                 </div>
                 <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:shadow-outline"
                     href="/productoSaliente">Productos Salientes</a>
+                    <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:shadow-outline"
+                    href="/productoIngresado">Productos Ingresados</a>
                     <div @click.away="open = false" class="relative" x-data="{ open: false }">
                         <button @click="open = !open"
                             class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:shadow-outline">
-                            <a href="/productos"><span>Proveedores</span></a>
+                            <a href="/proveedores"><span>Proveedores</span></a>
                             <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}"
                                 class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform">
                                 <path fill-rule="evenodd"
@@ -94,7 +96,17 @@
                                             <p class="font-semibold">Registrar nuevo proveedor</p>
                                         </div>
                                     </a>
-                                    
+                                    <a class="flex flex-row items-start p-2 rounded-lg hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:shadow-outline open-modal"
+                                    href="{{url_for('proveedores.importar_proveedores')}}">
+                                    <div class="ml-3">
+                                        <p class="font-semibold">Importar Proveedores</p>
+                                    </div>
+                                    <a class="flex flex-row items-start p-2 rounded-lg hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:shadow-outline open-modal"
+                                    href="{{ url_for('proveedores.exportarProveedores', formato='csv') }}">
+                                    <div class="ml-3">
+                                        <p class="font-semibold">Exportar a CSV</p>
+                                    </div>
+                                </a>
                                     
                                 </div>
                             </div>

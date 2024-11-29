@@ -11,7 +11,7 @@ app = Flask(__name__)
 load_dotenv()
 
 productoIngresado_bp = Blueprint('productoIngresado', __name__)
-
+ 
 
 @productoIngresado_bp.route('/editarIngreso')
 def editar_ingreso():
@@ -92,26 +92,6 @@ def ingresos():
     # Pasar los datos al template
     return render_template('./ProductosIngresados/ingresos.html', ingresos=ingresos)
 
-
-# @productoIngresado_bp.route('/productos/graficoIngresos', methods=['GET'])
-# def grafico_ingresos():
-#     conn = get_connection()
-
-#     # Se seleccionan los datos de productoIngresado
-#     query = '''
-#     SELECT pi.fechaIngreso, SUM(pi.cantidad) AS totalIngresos
-#     FROM ProductoIngresado pi
-#     GROUP BY pi.fechaIngreso
-#     ORDER BY pi.fechaIngreso
-# '''
-#     data = pd.read_sql(query, conn)
-#     conn.close()
-
-#     # Convertir datos a listas para el gráfico
-#     fechas = data['fechaIngreso'].tolist()
-#     ingresos = data['totalIngresos'].tolist()
-
-#     return render_template('./Graficos/graficProdIngresos.html', fechas=fechas, ingresos=ingresos)
 
 
 @productoIngresado_bp.route('/editarIngreso/<int:id>', methods=['GET', 'POST'])
