@@ -16,22 +16,6 @@ CREATE TABLE Producto (
     categoriaProducto VARCHAR(255) NOT NULL
 );
 
--- Insertar datos en la tabla Producto
-INSERT INTO Producto (nombreProducto, cantidadDisponible, categoriaProducto)
-VALUES
-('Pepas', 25, 'galletas'),
-('Spaghetti', 50, 'fideos'),
-('Spaghetti', 50, 'fideos'),
-('Tallarines', 25, 'fideos'),
-('Tallarines', 25, 'fideos'),
-('Tallarines', 25, 'fideos'),
-('Tallarines', 25, 'fideos'),
-('Tallarines', 25, 'fideos'),
-('Tallarines', 25, 'fideos'),
-('Tallarines', 25, 'fideos'),
-('Pepas', 45, 'galletas'),
-('Arroz', 35, 'otros');
-
 -- Crear tabla Proveedor
 CREATE TABLE Proveedor (
     idProveedor INT PRIMARY KEY IDENTITY(1,1),

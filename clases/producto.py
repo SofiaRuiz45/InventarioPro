@@ -62,10 +62,11 @@ def products():
     '''
     productos_df = pd.read_sql(query, conn)
     conn.close()
+    error = request.args.get('error', None)
 
     productos = productos_df.to_dict(orient='records')
 
-    return render_template('./productos/productos.html', productos=productos)
+    return render_template('./productos/productos.html', productos=productos, error=error)
 
 
 # Ruta para editar un producto
@@ -112,15 +113,33 @@ def editarProducto(id):
     return render_template('./productos/editarProducto.html', producto=producto)
 
 # Ruta para eliminar un producto
+import pyodbc
+
 @productos_bp.route('/eliminarProducto/<int:id>', methods=['POST'])
 def eliminarProducto(id):
-    conn = get_connection()
+    conn = get_connection()  # Tu función para conectar a SQL Server
     cursor = conn.cursor()
-    cursor.execute('DELETE FROM Producto WHERE idProducto = ?', (id,))
-    conn.commit()
-    conn.close()
-    
+
+    try:
+        # Intenta eliminar el producto
+        cursor.execute('DELETE FROM Producto WHERE idProducto = ?', (id,))
+        conn.commit()
+    except pyodbc.IntegrityError as e:
+        # Captura el error de integridad referencial
+        conn.rollback()
+        print(f"Error de integridad: {e}")
+        return redirect(url_for('productos.products', error="No se puede eliminar el producto porque tiene registros relacionados."))
+    except Exception as e:
+        # Manejo general de errores
+        conn.rollback()
+        print(f"Error inesperado: {e}")
+        return redirect(url_for('productos.products', error="Ocurrió un error inesperado al intentar eliminar el producto."))
+    finally:
+        conn.close()
+
+    # Si no hay errores, redirige normalmente
     return redirect(url_for('productos.products'))
+
 
 # Ruta para exportar productos
 @productos_bp.route('/exportarProductos', methods=['GET'])
