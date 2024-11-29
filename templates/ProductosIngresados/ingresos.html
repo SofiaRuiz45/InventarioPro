@@ -1,51 +1,125 @@
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingresos de Productos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {% include 'navbar.html' %}
 </head>
-{% include 'navbar.html' %}
-<div class="container mx-auto mt-10">
-    <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Ingresos de Productos</h2>
 
-    <div class="overflow-x-auto">
-        <table class="min-w-full bg-white border border-gray-200 shadow-lg rounded-lg">
-            <thead>
-                <tr class="bg-gray-800 text-white text-left">
-                    <th class="py-3 px-6 font-semibold">ID ingreso</th>
-                    <th class="py-3 px-6 font-semibold">ID Producto</th>
-                    <th class="py-3 px-6 font-semibold">Nombre del Producto</th>
-                    <th class="py-3 px-6 font-semibold">Cantidad Ingresada</th>
-                    <th class="py-3 px-6 font-semibold">Precio </th>
-                    <th class="py-3 px-6 font-semibold">Fecha de Ingreso</th>
-                    <th class="py-3 px-6 font-semibold">Proveedor</th>
-                </tr>
-            </thead>
-            <tbody class="text-gray-700">
-                {% for ingreso in ingresos %}
-                <tr class="border-b border-gray-200">
-                    <td class="py-4 px-6">{{ ingreso['idProdIngresado'] }}</td>
-                    <td class="py-4 px-6">{{ ingreso['idProducto'] }}</td>
-                    <td class="py-4 px-6">{{ ingreso['nombreProducto'] }}</td>
-                    <td class="py-4 px-6">{{ ingreso['cantidad'] }}</td>
-                    <td class="py-4 px-6">{{ ingreso['precioUnitarioIng'] }}</td>
-                    <td class="py-4 px-6">{{ ingreso['fechaIngreso'] }}</td>
-                    <td class="py-4 px-6">{{ ingreso['nombreProveedor'] }}</td>
-                    <td class="py-4 px-6">
-                        <!-- Acciones -->
-                        <a href="/productoIngresado/editarIngreso/{{ingreso['idProdIngresado']}}"
-                            class="text-blue-500 hover:text-blue-700">Editar</a>
-                        <form action="{{ url_for('productoIngresado.eliminarIngreso', id=ingreso['idProdIngresado']) }}"
-                            method="POST" style="display: inline;">
-                            <button type="submit" class="text-red-500 hover:text-red-700">Eliminar</button>
-                        </form>
+<body>
+    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8 mt-18 lg:p-12">
+        <div class="max-w-7xl mx-auto">
+            <header class="bg-white shadow-md rounded-lg mb-6 flex items-center justify-between px-4 py-3">
+                <h1 class="text-2xl font-bold text-indigo-800">Ingresos</h1>
+                <div class="flex items-center space-x-4">
+                    <a href="/productoIngresado/ingresarProducto"
+                        class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition duration-300 ease-in-out open-modal">
+                        Realizar un Ingreso
+                    </a>
+                </div>
+            </header>
 
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+            {% if ingresos %}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-gray-800 text-white text-left">
+                                <th class="py-3 px-6 font-semibold">ID ingreso</th>
+                                <th class="py-3 px-6 font-semibold">ID Producto</th>
+                                <th class="py-3 px-6 font-semibold">Nombre del Producto</th>
+                                <th class="py-3 px-6 font-semibold">Cantidad Ingresada</th>
+                                <th class="py-3 px-6 font-semibold">Precio</th>
+                                <th class="py-3 px-6 font-semibold">Fecha de Ingreso</th>
+                                <th class="py-3 px-6 font-semibold">Proveedor</th>
+                                <th class="py-3 px-6 font-semibold">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-700">
+                            {% for ingreso in ingresos %}
+                            <tr class="border-b border-gray-200">
+                                <td class="py-4 px-6">{{ ingreso['idProdIngresado'] }}</td>
+                                <td class="py-4 px-6">{{ ingreso['idProducto'] }}</td>
+                                <td class="py-4 px-6">{{ ingreso['nombreProducto'] }}</td>
+                                <td class="py-4 px-6">{{ ingreso['cantidad'] }}</td>
+                                <td class="py-4 px-6">{{ ingreso['precioUnitarioIng'] }}</td>
+                                <td class="py-4 px-6">{{ ingreso['fechaIngreso'] }}</td>
+                                <td class="py-4 px-6">{{ ingreso['nombreProveedor'] }}</td>
+                                <td class="py-4 px-6">
+                                    <div class="flex items-center space-x-4">
+                                        <a href="/productoIngresado/editarIngreso/{{ingreso['idProdIngresado']}}"
+                                            class="text-blue-500 hover:text-blue-700 open-modal">
+                                            Editar
+                                        </a>
+                                        <!-- hay problemas al eliminar por las relaciones -->
+                                        <!-- <form
+                                            action="{{ url_for('productoIngresado.eliminarIngreso', id=ingreso['idProdIngresado']) }}"
+                                            method="POST" style="display: inline;">
+                                            <button type="submit"
+                                                class="text-red-500 hover:text-red-700">Eliminar</button>
+                                        </form> -->
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% else %}
+            <p class="text-center text-gray-500">No hay ingresos de productos registrados.</p>
+            {% endif %}
+        </div>
     </div>
-    <div class="text-right mt-4">
-        <a href="/productoIngresado/ingresarProducto"
-            class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ingresar
-            Producto</a>
+    <div id="modal" class="fixed inset-0 hidden bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg w-3/4 max-w-lg shadow-lg">
+            <button id="closeModal" class="text-gray-500 hover:text-gray-900 absolute top-4 right-4">✖</button>
+            <div id="modal-content" class="p-6">
+                <!-- contenido del modal -->
+            </div>
+        </div>
     </div>
-</div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const openModalButtons = document.querySelectorAll(".open-modal");
+            const closeModal = document.getElementById("closeModal");
+            const modal = document.getElementById("modal");
+            const modalContent = document.getElementById("modal-content");
+
+            openModalButtons.forEach(button => {
+                button.addEventListener("click", async (e) => {
+                    e.preventDefault();
+                    try {
+                        const response = await fetch(button.href);
+                        if (!response.ok) throw new Error("Error al cargar el formulario");
+                        const content = await response.text();
+                        modalContent.innerHTML = content;
+                        modal.classList.remove("hidden");
+                    } catch (error) {
+                        console.error(error);
+                        alert("No se pudo cargar el formulario.");
+                    }
+                });
+            });
+
+            closeModal.addEventListener("click", () => {
+                modal.classList.add("hidden");
+                modalContent.innerHTML = "";
+            });
+
+            modal.addEventListener("click", (e) => {
+                if (e.target === modal) {
+                    modal.classList.add("hidden");
+                    modalContent.innerHTML = "";
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

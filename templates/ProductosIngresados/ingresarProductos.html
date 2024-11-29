@@ -1,19 +1,15 @@
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nuevo Producto</title>
 <script src="https://cdn.tailwindcss.com"></script>
 
-<section class="flex flex-col items-center pt-6">
-    <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                Registrar Producto</h1>
+    <div>
+        <div>
+            <!-- <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-black">
+                Registrar Producto</h1> -->
             <form method="POST" action="/productoIngresado/ingresarProducto" class="space-y-4 md:space-y-6">
                 <!-- Select para el proveedor -->
                 <div>
-                    <label for="idProveedor" class="block text-sm font-medium text-gray-900 dark:text-white">Proveedor</label>
+                    <label for="idProveedor" class="block text-sm font-medium text-gray-900 dark:text-black">Proveedor</label>
                     <select name="idProveedor" id="idProveedor"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-100 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option value="" selected>Selecciona un proveedor</option>
                         {% for proveedor in proveedores %}
                             <option value="{{ proveedor.idProveedor}}">{{ proveedor['nombreProveedor']}}</option>
@@ -23,9 +19,9 @@
 
                 <!-- Select para el producto -->
                 <div>
-                    <label for="idProducto" class="block text-sm font-medium text-gray-900 dark:text-white">Producto</label>
+                    <label for="idProducto" class="block text-sm font-medium text-gray-900 dark:text-black">Producto</label>
                     <select name="idProducto" id="idProducto"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option value="" selected>Selecciona un producto</option>
                         {% for producto in productos %}
                             <option value="{{ producto.idProducto}}">{{ producto.nombreProducto}}</option>
@@ -35,23 +31,23 @@
 
                 <!-- Campo cantidad -->
                 <div>
-                    <label for="cantidad" class="block text-sm font-medium text-gray-900 dark:text-white">Cantidad</label>
+                    <label for="cantidad" class="block text-sm font-medium text-gray-900 dark:text-black">Cantidad</label>
                     <input type="number" name="cantidad" id="cantidad" required
-                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
 
                 <!-- Campo precio unitario -->
                 <div>
-                    <label for="precioUnitarioIng" class="block text-sm font-medium text-gray-900 dark:text-white">Precio Unitario</label>
+                    <label for="precioUnitarioIng" class="block text-sm font-medium text-gray-900 dark:text-black">Precio Unitario</label>
                     <input type="number" step="0.01" name="precioUnitarioIng" id="precioUnitarioIng" required
-                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
 
                 <!-- Campo fecha de ingreso -->
                 <div>
-                    <label for="fechaIngreso" class="block text-sm font-medium text-gray-900 dark:text-white">Fecha de Ingreso</label>
+                    <label for="fechaIngreso" class="block text-sm font-medium text-gray-900 dark:text-black">Fecha de Ingreso</label>
                     <input type="date" name="fechaIngreso" id="fechaIngreso" required
-                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
 
                 <!-- Botón para registrar el producto -->
@@ -62,5 +58,3 @@
             </form>
         </div>
     </div>
-</section>
-

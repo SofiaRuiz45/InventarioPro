@@ -102,21 +102,58 @@ def editarIngreso(id):
     if request.method == 'POST':
         id_producto = int(request.form.get('idProducto'))
         id_proveedor = int(request.form.get('idProveedor'))
-        cantidad_ingresada = int(request.form.get('cantidad'))
+        nueva_cantidad_ingresada = int(request.form.get('cantidad'))
         fecha_ingreso = request.form.get('fechaIngreso')
         precio_unitario = float(request.form.get('precioUnitarioIng'))
 
-        # Actualizar el producto ingresado
+        # Obtener los datos actuales del ingreso antes de actualizar
+        cursor.execute('''
+            SELECT cantidad, idProducto
+            FROM ProductoIngresado
+            WHERE idProdIngresado = ?
+        ''', (id,))
+        ingreso_actual = cursor.fetchone()
+
+        if ingreso_actual:
+            cantidad_actual = ingreso_actual[0]
+            producto_actual_id = ingreso_actual[1]
+
+            # Actualizar la cantidad disponible del producto solo si se cambia la cantidad
+            if nueva_cantidad_ingresada != cantidad_actual:
+                diferencia_cantidad = nueva_cantidad_ingresada - cantidad_actual
+                cursor.execute('''
+                    UPDATE Producto
+                    SET cantidadDisponible = cantidadDisponible + ?
+                    WHERE idProducto = ?
+                ''', (diferencia_cantidad, id_producto))
+
+            # Si el producto asociado al ingreso cambia, no modificar la cantidad disponible
+            if producto_actual_id != id_producto:
+                # Revertir la cantidad del producto anterior
+                cursor.execute('''
+                    UPDATE Producto
+                    SET cantidadDisponible = cantidadDisponible - ?
+                    WHERE idProducto = ?
+                ''', (cantidad_actual, producto_actual_id))
+
+                # Sumar la cantidad al nuevo producto
+                cursor.execute('''
+                    UPDATE Producto
+                    SET cantidadDisponible = cantidadDisponible + ?
+                    WHERE idProducto = ?
+                ''', (nueva_cantidad_ingresada, id_producto))
+
+        # Actualizar los datos del ingreso en la tabla ProductoIngresado
         cursor.execute('''
             UPDATE ProductoIngresado
             SET idProveedor = ?, idProducto = ?, cantidad = ?, fechaIngreso = ?, precioUnitarioIng = ?
             WHERE idProdIngresado = ?
-        ''', (id_proveedor, id_producto, cantidad_ingresada, fecha_ingreso, precio_unitario, id))
+        ''', (id_proveedor, id_producto, nueva_cantidad_ingresada, fecha_ingreso, precio_unitario, id))
 
         conn.commit()
         conn.close()
         return redirect(url_for('productoIngresado.ingresos'))
-    
+
     # Obtener el producto ingresado específico
     cursor.execute('''
         SELECT idProdIngresado, idProveedor, idProducto, fechaIngreso, cantidad, precioUnitarioIng
@@ -147,6 +184,7 @@ def editarIngreso(id):
         productos=productos,
         proveedores=proveedores
     )
+
 
 @productoIngresado_bp.route('/eliminarIngreso/<int:id>', methods=['POST'])
 def eliminarIngreso(id):
