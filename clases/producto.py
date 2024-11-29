@@ -195,15 +195,41 @@ def importarProductos():
     # Conectar a la base de datos y guardar los datos
     conn = get_connection()
     cursor = conn.cursor()
+
     for _, row in productos_df.iterrows():
+        # Validar y convertir precioUnitario y precioVenta
+        try:
+            precio_unitario = float(row['precioUnitario']) if pd.notnull(row['precioUnitario']) else None
+            precio_venta = float(row['precioVenta']) if pd.notnull(row['precioVenta']) else None
+        except ValueError:
+            # Si no se puede convertir a float, asignamos None o manejamos el error
+            precio_unitario = None
+            precio_venta = None
+
+        # Verificar que los precios sean valores válidos (no None o NaN)
+        if precio_unitario is None or precio_venta is None:
+            continue  # O manejar el error según tus necesidades
+
+        # Asegurarse de que los demás campos sean válidos
+        nombre_producto = row['nombreProducto']
+        cantidad_disponible = row['cantidadDisponible']
+        categoria_producto = row['categoriaProducto']
+
+        # Asegurarse de que los valores numéricos sean válidos
+        if not isinstance(cantidad_disponible, (int, float)):
+            cantidad_disponible = 0  # O manejar de acuerdo a lo que quieras hacer con los valores no válidos
+
+        # Insertar los datos en la base de datos
         cursor.execute('''
-            INSERT INTO Producto (nombreProducto, cantidadDisponible, precioUnitario, precioVenta, categoriaProducto)
-            VALUES (?, ?, ?, ?,?)
-        ''', (row['nombreProducto'], row['cantidadDisponible'], row['categoriaProducto'], row['precioUnitario'], row['precioVenta']))
+            INSERT INTO Producto (nombreProducto, cantidadDisponible, categoriaProducto, precioUnitario, precioVenta)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (nombre_producto, cantidad_disponible, categoria_producto, precio_unitario, precio_venta))
+
     conn.commit()
     conn.close()
 
     return redirect(url_for('productos.products'))
+
 # Eliminar todos los productos
 @productos_bp.route('/eliminarTodosProductos', methods=['POST'])
 def eliminarTodosProductos():
