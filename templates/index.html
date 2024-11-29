@@ -1,13 +1,25 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Inventarios</title>   
+    <title>Gestión de Inventarios</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 {% include 'navbar.html' %}{% if productos %}
+
 <body>
+    <style>
+        #graficoIngresos {
+            width: 80%;
+            height: 400px;
+            max-width: 100%;
+            max-height: 500px;
+            margin: 0 auto;
+        }
+    </style>
     <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8 mt-18 lg:p-12">
         <div class="max-w-7xl mx-auto">
             <header class="bg-white shadow-md rounded-lg mb-6 flex items-center justify-between px-4 py-3">
@@ -15,85 +27,156 @@
                 <div class="flex items-center space-x-4">
                 </div>
             </header>
-            
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <div class="overflow-x-auto">
-            <table class="w-full">
-                <thead>
-                    <tr class="bg-gray-800 text-white text-left">
-                        <th class="py-3 px-6 font-semibold">ID</th>
-                        <th class="py-3 px-6 font-semibold">Nombre del Producto</th>
-                        <th class="py-3 px-6 font-semibold">Cantidad Disponible</th>
-                        <th class="py-3 px-6 font-semibold">Precio Unitario</th>
-                        <th class="py-3 px-6 font-semibold">Precio de Venta</th>
-                        <th class="py-3 px-6 font-semibold">Categoría</th>
-                    </tr>
-                </thead>
-                <tbody class="text-gray-700">
-                    {% for producto in productos %}
-                    <tr class="border-b border-gray-200">
-                        <td class="py-4 px-6">{{ producto['idProducto'] }}</td> 
-                        <td class="py-4 px-6">{{ producto['nombreProducto'] }}</td> 
-                        <td class="py-4 px-6">{{ producto['cantidadDisponible'] }}</td>  
-                        <td class="py-4 px-6">{{ producto['precioUnitario'] }}</td>  
-                        <td class="py-4 px-6">{{ producto['precioVenta'] }}</td>  
-                        <td class="py-4 px-6">{{ producto['categoriaProducto'] }}</td>  
-                    
-                    </tr>
-                    {% endfor %}
-                </tbody>                
-            </table>
-        </div>
-        {% else %}
-        <p class="text-center text-gray-500">No hay productos registrados.</p>
-        {% endif %} 
-    </div>
-    </div>
-        </div>
-        <div id="modal" class="fixed inset-0 hidden bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-            <div class="bg-white rounded-lg w-3/4 max-w-lg shadow-lg">
-                <button id="closeModal" class="text-gray-500 hover:text-gray-900 absolute top-4 right-4">✖</button>
-                <div id="modal-content" class="p-6">
-                    <!-- contenido del modal -->
+
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-gray-800 text-white text-left">
+                                <th class="py-3 px-6 font-semibold">ID</th>
+                                <th class="py-3 px-6 font-semibold">Nombre del Producto</th>
+                                <th class="py-3 px-6 font-semibold">Cantidad Disponible</th>
+                                <th class="py-3 px-6 font-semibold">Precio Unitario</th>
+                                <th class="py-3 px-6 font-semibold">Precio de Venta</th>
+                                <th class="py-3 px-6 font-semibold">Categoría</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-700">
+                            {% for producto in productos %}
+                            <tr class="border-b border-gray-200">
+                                <td class="py-4 px-6">{{ producto['idProducto'] }}</td>
+                                <td class="py-4 px-6">{{ producto['nombreProducto'] }}</td>
+                                <td class="py-4 px-6">{{ producto['cantidadDisponible'] }}</td>
+                                <td class="py-4 px-6">{{ producto['precioUnitario'] }}</td>
+                                <td class="py-4 px-6">{{ producto['precioVenta'] }}</td>
+                                <td class="py-4 px-6">{{ producto['categoriaProducto'] }}</td>
+
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
+                {% else %}
+                <p class="text-center text-gray-500">No hay productos registrados.</p>
+                {% endif %}
             </div>
         </div>
-        
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                const openModalButtons = document.querySelectorAll(".open-modal");
-                const closeModal = document.getElementById("closeModal");
-                const modal = document.getElementById("modal");
-                const modalContent = document.getElementById("modal-content");
-        
-                openModalButtons.forEach(button => {
-                    button.addEventListener("click", async (e) => {
-                        e.preventDefault();
-                        try {
-                            const response = await fetch(button.href);
-                            if (!response.ok) throw new Error("Error al cargar el formulario");
-                            const content = await response.text();
-                            modalContent.innerHTML = content;
-                            modal.classList.remove("hidden");
-                        } catch (error) {
-                            console.error(error);
-                            alert("No se pudo cargar el formulario.");
-                        }
-                    });
-                });
-        
-                closeModal.addEventListener("click", () => {
-                    modal.classList.add("hidden");
-                    modalContent.innerHTML = "";
-                });
-        
-                modal.addEventListener("click", (e) => {
-                    if (e.target === modal) {
-                        modal.classList.add("hidden");
-                        modalContent.innerHTML = "";
+    </div>
+    <div id="modal" class="fixed inset-0 hidden bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg w-3/4 max-w-lg shadow-lg">
+            <button id="closeModal" class="text-gray-500 hover:text-gray-900 absolute top-4 right-4">✖</button>
+            <div id="modal-content" class="p-6">
+                <!-- contenido del modal -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const openModalButtons = document.querySelectorAll(".open-modal");
+            const closeModal = document.getElementById("closeModal");
+            const modal = document.getElementById("modal");
+            const modalContent = document.getElementById("modal-content");
+
+            openModalButtons.forEach(button => {
+                button.addEventListener("click", async (e) => {
+                    e.preventDefault();
+                    try {
+                        const response = await fetch(button.href);
+                        if (!response.ok) throw new Error("Error al cargar el formulario");
+                        const content = await response.text();
+                        modalContent.innerHTML = content;
+                        modal.classList.remove("hidden");
+                    } catch (error) {
+                        console.error(error);
+                        alert("No se pudo cargar el formulario.");
                     }
                 });
             });
+
+            closeModal.addEventListener("click", () => {
+                modal.classList.add("hidden");
+                modalContent.innerHTML = "";
+            });
+
+            modal.addEventListener("click", (e) => {
+                if (e.target === modal) {
+                    modal.classList.add("hidden");
+                    modalContent.innerHTML = "";
+                }
+            });
+        });
+    </script>
+    <div class="container mx-auto mt-10">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Movimientos de productos</h2>
+        <canvas id="graficoIngresos" class="bg-white p-4 shadow rounded"></canvas>
+    </div>
+    <div>
+        <script>
+            // Datos que vienen desde el backend (pasados desde Flask)
+            const fechasIngreso = {{ fechas | tojson }};
+            const ingresosTotales = {{ ingresos_totales | tojson }};
+            const fechasSalida = {{ fechas_salida | tojson }};
+            const salidasTotales = {{ salidas_totales | tojson }};
+
+            // Combinar las fechas para que se alineen las de ingresos y salidas
+            const fechasCombinadas = [...new Set([...fechasIngreso, ...fechasSalida])];
+
+            // Función para obtener los totales de ingresos y salidas por fecha
+            function getTotalesPorFecha(fechas, fechasIngreso, ingresosTotales, fechasSalida, salidasTotales) {
+                return fechas.map(fecha => {
+                    const ingreso = ingresosTotales[fechasIngreso.indexOf(fecha)] || 0;
+                    const salida = salidasTotales[fechasSalida.indexOf(fecha)] || 0;
+                    return { fecha, ingreso, salida };
+                });
+            }
+
+            // Obtener los totales por fecha
+            const totales = getTotalesPorFecha(fechasCombinadas, fechasIngreso, ingresosTotales, fechasSalida, salidasTotales);
+
+            // Datos para el gráfico
+            const ingresosData = totales.map(t => t.ingreso);
+            const salidasData = totales.map(t => t.salida);
+
+            // Configuración de Chart.js
+            const ctx = document.getElementById('graficoIngresos').getContext('2d');
+            const ingresosChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: fechasCombinadas,  
+                    datasets: [{
+                        label: 'Ingresos',
+                        data: ingresosData,
+                        borderColor: 'rgba(75, 192, 192, 1)', 
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',  
+                        borderWidth: 2,
+                        tension: 0.4,  
+                        fill: true
+                    },
+                    {
+                        label: 'Salidas',
+                        data: salidasData,  // Datos de salidas
+                        borderColor: 'rgba(255, 99, 132, 1)', 
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)', 
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    aspectRatio: 2,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
         </script>
+
+
+    </div>
 </body>
+
 </html>

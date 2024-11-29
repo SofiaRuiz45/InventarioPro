@@ -69,7 +69,7 @@ def prov():
 def editarProveedor(id):
     conn = get_connection()
     cursor = conn.cursor()
-
+ 
     if request.method == 'POST':
         nombre_proveedor = request.form.get('nombreProveedor')
         telefono_proveedor = request.form.get('telefonoProveedor')
@@ -170,6 +170,31 @@ def exportarProveedores():
 
     # Enviar el archivo al cliente
     return send_file(file_path, as_attachment=True)
+
+@proveedor_bp.route('/eliminarTodosProveedores', methods=['POST'])
+def eliminarTodosProveedores():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    try:
+
+         # se debe de realizar un delete casacade que se debe de hacer en sql server 
+        cursor.execute('DELETE FROM ProductoIngresado WHERE idProveedor IS NOT NULL')
+        print(cursor.fetchall())
+
+        # Eliminar todos los registros de Producto despuésf
+        cursor.execute('DELETE FROM Proveedor')
+        print(cursor.fetchall())
+        
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        print(f"Error al eliminar los prov: {e}")
+        return "Error al eliminar los prov", 500
+    finally:
+        conn.close()
+
+    return redirect(url_for('proveedores.prov'))
 
 #
 # if __name__ == '__main__':
