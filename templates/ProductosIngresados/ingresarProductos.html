@@ -12,11 +12,11 @@
                 <!-- Select para el proveedor -->
                 <div>
                     <label for="idProveedor" class="block text-sm font-medium text-gray-900 dark:text-white">Proveedor</label>
-                    <select name="idProveedor" id="idProveedor" required
+                    <select name="idProveedor" id="idProveedor"
                         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option value="" selected>Selecciona un proveedor</option>
                         {% for proveedor in proveedores %}
-                            <option value="{{ proveedor['idProveedor'] }}">{{ proveedor['nombreProveedor']}}</option>
+                            <option value="{{ proveedor.idProveedor}}">{{ proveedor['nombreProveedor']}}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -24,15 +24,15 @@
                 <!-- Select para el producto -->
                 <div>
                     <label for="idProducto" class="block text-sm font-medium text-gray-900 dark:text-white">Producto</label>
-                    <select name="idProducto" id="idProducto" required
+                    <select name="idProducto" id="idProducto"
                         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option value="" selected>Selecciona un producto</option>
-                        {% for productos in productos %}
-                            <option value="{{ productos['idProducto']}}">{{ productos['nombreProducto']}}</option>
+                        {% for producto in productos %}
+                            <option value="{{ producto.idProducto}}">{{ producto.nombreProducto}}</option>
                         {% endfor %}
                     </select>
                 </div>
-<div></div>
+
                 <!-- Campo cantidad -->
                 <div>
                     <label for="cantidad" class="block text-sm font-medium text-gray-900 dark:text-white">Cantidad</label>
@@ -63,3 +63,4 @@
         </div>
     </div>
 </section>
+

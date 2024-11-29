@@ -86,7 +86,7 @@ def editarProveedor(id):
         conn.close()
         return redirect(url_for('proveedores.prov'))
 
-    cursor.execute(
+    cursor.execute( 
         'SELECT idProveedor, nombreProveedor, telefonoProveedor,direccionProveedor FROM Proveedor WHERE idProveedor = ?', (id,))
     proveedor = cursor.fetchone()
     conn.close()
