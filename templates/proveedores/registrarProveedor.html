@@ -1,47 +1,40 @@
 <script src="https://cdn.tailwindcss.com"></script>
-<form action="/proveedores/registrarProveedor" method="POST">
-    <div class="w-full bg-white shadow border md:mt-0 sm:max-w-md xl:p-0">
-        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 class="text-xl font-bold leading-tight tracking-tight text-black md:text-2xl">
-                Registrar un Proveedor
-            </h1>
-            <div class="space-y-4 md:space-y-6">
-                <!-- Campo Nombre -->
-                <div>
-                    <label for="nombreProveedor" class="block text-sm font-medium text-black">
-                        Nombre Proveedor
-                    </label>
-                    <input type="text" id="nombreProveedor" name="nombreProveedor" required
-                        class="bg-white border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5">
-                </div>
-                <!-- Campo Teléfono -->
-                <div>
-                    <label for="telefonoProveedor" class="block text-sm font-medium text-black">
-                        Teléfono
-                    </label>
-                    <input type="number" id="telefonoProveedor" name="telefonoProveedor" required
-                        class="bg-white border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5">
-                </div>
-                <!-- Campo Dirección -->
-                <div>
-                    <label for="direccionProveedor" class="block text-sm font-medium text-black">
-                        Dirección
-                    </label>
-                    <input type="text" id="direccionProveedor" name="direccionProveedor" required
-                        class="bg-white border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5">
-                </div>
-                <!-- Botones -->
-                <div class="flex justify-between space-x-4">
-                    <button type="submit"
-                        class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                        Registrar
-                    </button>
-                    <a href="javascript:history.back()"
-                        class="w-full text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                        Cancelar
-                    </a>
-                </div>
-            </div>
-        </div>
+<form action="/proveedores/registrarProveedor" method="POST" class="space-y-4 md:space-y-6">
+
+    <!-- Campo Nombre -->
+    <div>
+        <label for="nombreProveedor" class="block text-sm font-medium text-black">
+            Nombre Proveedor
+        </label>
+        <input type="text" id="nombreProveedor" name="nombreProveedor" required
+            class="bg-white border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5">
     </div>
+    <!-- Campo Teléfono -->
+    <div>
+        <label for="telefonoProveedor" class="block text-sm font-medium text-black">
+            Teléfono
+        </label>
+        <input type="number" id="telefonoProveedor" name="telefonoProveedor" required
+            class="bg-white border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5">
+    </div>
+    <!-- Campo Dirección -->
+    <div>
+        <label for="direccionProveedor" class="block text-sm font-medium text-black">
+            Dirección
+        </label>
+        <input type="text" id="direccionProveedor" name="direccionProveedor" required
+            class="bg-white border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5">
+    </div>
+    <!-- Botones -->
+    <div class="flex justify-between space-x-4">
+        <button type="submit"
+            class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+            Registrar
+        </button>
+        <a href="javascript:history.back()"
+            class="w-full text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+            Cancelar
+        </a>
+    </div>
+
 </form>

@@ -66,56 +66,63 @@
                                         <p class="font-semibold">Exportar a Excel</p>
                                     </div>
                                 </a>
-                                
+
                             </div>
                         </div>
                     </div>
                 </div>
                 <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:shadow-outline"
                     href="/productoSaliente">Productos Salientes</a>
-                    <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:shadow-outline"
+                <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:shadow-outline"
                     href="/productoIngresado">Productos Ingresados</a>
-                    <div @click.away="open = false" class="relative" x-data="{ open: false }">
-                        <button @click="open = !open"
-                            class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:shadow-outline">
-                            <a href="/proveedores"><span>Proveedores</span></a>
-                            <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}"
-                                class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform">
-                                <path fill-rule="evenodd"
-                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                        </button>
-                        <div x-show="open"
-                            class="absolute right-0 w-full mt-2 origin-top-right md:max-w-screen-sm md:w-screen">
-                            <div class="px-2 pt-2 pb-4 bg-gray-800 rounded-md shadow-lg">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <a class="flex flex-row items-start p-2 rounded-lg hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:shadow-outline open-modal"
-                                        href="/proveedores/registrarProveedor">
-                                        <div class="ml-3">
-                                            <p class="font-semibold">Registrar nuevo proveedor</p>
-                                        </div>
-                                    </a>
-                                    <a class="flex flex-row items-start p-2 rounded-lg hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:shadow-outline open-modal"
+                <div @click.away="open = false" class="relative" x-data="{ open: false }">
+                    <button @click="open = !open"
+                        class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:shadow-outline">
+                        <a href="/proveedores"><span>Proveedores</span></a>
+                        <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}"
+                            class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform">
+                            <path fill-rule="evenodd"
+                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                    <div x-show="open"
+                        class="absolute right-0 w-full mt-2 origin-top-right md:max-w-screen-sm md:w-screen">
+                        <div class="px-2 pt-2 pb-4 bg-gray-800 rounded-md shadow-lg">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <a class="flex flex-row items-start p-2 rounded-lg hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:shadow-outline open-modal"
+                                    href="/proveedores/registrarProveedor">
+                                    <div class="ml-3">
+                                        <p class="font-semibold">Registrar nuevo proveedor</p>
+                                    </div>
+                                </a>
+                                <a class="flex flex-row items-start p-2 rounded-lg hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:shadow-outline open-modal"
                                     href="{{url_for('proveedores.importar_proveedores')}}">
                                     <div class="ml-3">
                                         <p class="font-semibold">Importar Proveedores</p>
                                     </div>
-                                    <a class="flex flex-row items-start p-2 rounded-lg hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:shadow-outline open-modal"
-                                    href="{{ url_for('proveedores.exportarProveedores', formato='csv') }}">
-                                    <div class="ml-3">
-                                        <p class="font-semibold">Exportar a CSV</p>
-                                    </div>
-                                </a>
-                                    
-                                </div>
+                                    <a class="flex flex-row items-start p-2 rounded-lg hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:shadow-outline"
+                                        href="{{ url_for('proveedores.exportarProveedores', formato='csv') }}">
+                                        <div class="ml-3">
+                                            <p class="font-semibold">Exportar a CSV</p>
+                                        </div>
+                                    </a>
+                                    <a class="flex flex-row items-start p-2 rounded-lg hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:shadow-outline"
+                                        href="{{ url_for('proveedores.exportarProveedores', formato='excel') }}">
+                                        <div class="ml-3">
+                                            <p class="font-semibold">Exportar a Excel</p>
+                                        </div>
+                                    </a>
+
                             </div>
                         </div>
-                        </div>
+                    </div>
+                </div>
                 <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:shadow-outline"
                     href="#">Reporte</a>
             </nav>
-            <div id="modal" class="fixed inset-0 hidden bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+            <div id="modal"
+                class="fixed inset-0 hidden bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
                 <div class="bg-white rounded-lg w-3/4 max-w-lg shadow-lg">
                     <button id="closeModal" class="text-gray-500 hover:text-gray-900 absolute top-4 right-4">✖</button>
                     <div id="modal-content" class="p-6">
@@ -123,14 +130,14 @@
                     </div>
                 </div>
             </div>
-            
+
             <script>
                 document.addEventListener("DOMContentLoaded", () => {
                     const openModalButtons = document.querySelectorAll(".open-modal");
                     const closeModal = document.getElementById("closeModal");
                     const modal = document.getElementById("modal");
                     const modalContent = document.getElementById("modal-content");
-            
+
                     openModalButtons.forEach(button => {
                         button.addEventListener("click", async (e) => {
                             e.preventDefault();
@@ -146,12 +153,12 @@
                             }
                         });
                     });
-            
+
                     closeModal.addEventListener("click", () => {
                         modal.classList.add("hidden");
                         modalContent.innerHTML = "";
                     });
-            
+
                     modal.addEventListener("click", (e) => {
                         if (e.target === modal) {
                             modal.classList.add("hidden");
@@ -160,7 +167,7 @@
                     });
                 });
             </script>
-            
+
         </div>
     </div>
 </div>
