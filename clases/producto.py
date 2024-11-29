@@ -198,8 +198,8 @@ def importarProductos():
     for _, row in productos_df.iterrows():
         cursor.execute('''
             INSERT INTO Producto (nombreProducto, cantidadDisponible, precioUnitario, precioVenta, categoriaProducto)
-            VALUES (?, ?, ?)
-        ''', (row['nombreProducto'], row['cantidadDisponible'], row['categoriaProducto']))
+            VALUES (?, ?, ?, ?,?)
+        ''', (row['nombreProducto'], row['cantidadDisponible'], row['categoriaProducto'], row['precioUnitario'], row['precioVenta']))
     conn.commit()
     conn.close()
 
@@ -213,9 +213,10 @@ def eliminarTodosProductos():
     try:
         # Eliminar todos los registros de ProductoSaliente primero
         cursor.execute('DELETE FROM ProductoSaliente')
-        
-        # Eliminar todos los registros de Producto despuésf
+        cursor.execute('DELETE FROM ProductoIngresado')
+        # Eliminar todos los registros de Producto después
         cursor.execute('DELETE FROM Producto')
+        
         
         conn.commit()
     except Exception as e:
